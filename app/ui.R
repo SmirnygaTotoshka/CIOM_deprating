@@ -34,6 +34,7 @@ shinyUI(
                               numericInput("Course",label = "Курс:", value = 1,min = 1,max = 6,step = 1),width = 3),
                  mainPanel(width = 9,
                            fluidPage(
+                             fluidRow(column(width = 12,textOutput("Num.Ans"))),
                              fluidRow(column(width = 12,dataTableOutput("CompProd"))
                              )
                            )

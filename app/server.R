@@ -8,14 +8,15 @@
 #
 
 library(shiny)
-library(shinyalert)
 library(googlesheets4)
 library(dplyr)
+library(readxl)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-    linkMeta = "https://docs.google.com/spreadsheets/d/1gdbQJc36-6auD9IFuGAoBAf4T-cKIpEQM93q-TYCiQQ/edit?usp=sharing"
-    myData = read_sheet(linkMeta) %>% as.data.frame()
+    #linkMeta = "https://docs.google.com/spreadsheets/d/1gdbQJc36-6auD9IFuGAoBAf4T-cKIpEQM93q-TYCiQQ/edit?usp=sharing"
+    #myData = read_sheet(linkMeta) %>% as.data.frame()
+    myData = read_xlsx("/home/tables/meta.xlsx")
     observeEvent(input$Speciality,{
         withProgress(message = 'Rendering, please wait!', {
             spec = isolate({input$Speciality})
@@ -25,11 +26,17 @@ shinyServer(function(input, output) {
                 tbl.Comp.Prod = NA
             }
             else{
-                tbl.Comp.Prod = read_sheet(link) %>% as.data.frame()
+                #tbl.Comp.Prod = read_sheet(link) %>% as.data.frame()
+                tbl.Comp.Prod = read_xlsx(paste0("/home/",link))
             }
             output$CompProd = renderDataTable({
                 validate(need(!is.na(tbl.Comp.Prod), "Нет данных"))
+                
                 tbl.Comp.Prod
+            })
+            output$Num.Ans = renderText({
+                validate(need(!is.na(tbl.Comp.Prod), ""))
+                paste0(spec,", ", course, " курс. Количество ответов = ",nrow(tbl.Comp.Prod))
             })
         })
 
