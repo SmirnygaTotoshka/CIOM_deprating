@@ -1,3 +1,7 @@
+# ЦИОМ - рейтинг кафедр
+Маленькое приложение на R Shiny, для публикации рейтинга кафедр Центра Изучения Общественного Мнения РНИМУ им. Н.И. Пирогова.
+
+
 # Heroku deployment examples
 
 Workflow (works with public and privare repositories):
